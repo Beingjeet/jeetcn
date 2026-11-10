@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .content-container {
+            min-height: 140px;
+            padding: 16px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+
+
+    <main class="container-grid">
+        <section class="content-container"><h2>bit stuffing</h2><br>
+#include stdio.h <br>
+#include string.h <br>
+int main() { <br>
+ char data[100];<br>
+ int i, count = 0;<br>
+ // Taking the bit stream<br>
+ printf("Enter the bits (0s and 1s only): ");<br>
+ scanf("%s", data);<br>
+ printf("Bit Stuffed data: ");<br>
+ // Loop through the input data<br>
+ for (i = 0; i < strlen(data); i++){<br>
+ printf("%c", data[i]);<br>
+ if (data[i] == '1'){<br>
+ count++;<br>
+
+}<br>
+ if (count == 5){<br>
+ printf("0");<br>
+ count = 0;<br>
+
+}<br>
+
+}<br>
+ printf("\n");<br>
+ return 0; }<br></p>
+</section>
+        <section class="content-container"><h2>bit de-stuffing</h2><p>
+#include stdio.h<br>
+#include string.h<br>
+int main() {<br>
+ char data[100];<br>
+ int i, count = 0;<br>
+ // Taking the stuffed bits<br>
+ printf("Enter the stuffed bits: ");<br>
+ scanf("%s", data);<br>
+ printf("Bit Unstuffed data: ");<br>
+ // Loop through the stuffed data<br>
+ for (i = 0; i < strlen(data); i++)<br>
+
+{<br>
+ if (data[i] == '1')<br>
+
+{<br>
+ printf("1");<br>
+ count++;<br>
+ if (count == 5)<br>
+
+{<br>
+ i++; // Skip the next bit<br>
+ count = 0;<br>
+
+}<br>
+
+}<br>
+
+else<br>
+{<br>
+printf("0");<br>
+ count = 0;<br>
+ }<br>
+ }<br>
+ printf("\n");<br>
+ return 0;<br>
+}<br>
+</p></section>
+        <section class="content-container"><h2>byte stuffing</h2><p>
+#include stdio.h<br>
+#include string.h<br>
+int main(){<br>
+ char data[100];<br>
+ int i;<br>
+ // Taking the data<br>
+ printf("Enter the data: ");<br>
+ gets(data);<br>
+ // Find the length of the string<br>
+ length = strlen(data);<br>
+ printf("Byte Stuffed Data: ");<br>
+ // Starting Flag<br>
+ printf("F");<br>
+ for(i = 0; i < length; i++){<br>
+ // Ignore spaces<br>
+ if(data[i] == ' '){<br>
+ continue;<br>
+
+}<br>
+ // Stuff Escape and Flag<br>
+ if(data[i] == 'E' || data[i] == 'F'){<br>
+ printf("E");<br>
+
+}<br>
+ // Print the character<br>
+ printf("%c", data[i]);<br>
+
+}<br>
+ // Ending Flag<br>
+ printf("F");<br>
+ return 0;<br>
+ }<br></p></section>
+        <section class="content-container"><h2>Byte de-stuffing</h2><p>
+#include stdio.h<br>
+#include string.h<br>
+int main(){<br>
+ char data[100];<br>
+ int i, length, start, end;<br>
+ // Taking the stuffed data<br>
+ printf("Enter the stuffed data: ");<br>
+ gets(data);<br>
+ // Find the length<br>
+ length = strlen(data);<br>
+ // Assume we print the whole string<br>
+ start = 0;<br>
+ end = length;<br>
+ // Remove starting Flag only if it is F<br>
+ if(data[0] == 'F'){<br>
+ start = 1;<br>
+ }<br>
+ // Remove ending Flag only if it is F<br>
+ if(data[length - 1] == 'F'){<br>
+ end = length - 1;<br>
+ }<br>
+ printf("Original Data: ");<br>
+ // Destuff the data<br>
+ for(i = start; i < end; i++){<br>
+ if(data[i] == 'E'){<br>
+ i++;<br>
+ }<br>
+ printf("%c", data[i]);<br>
+ }<br>
+ return 0;<br>
+}<br></p></section>
+        <section class="content-container"><h2>parity generator</h2><p>
+#include stdio.h<br>
+#include string.h<br>
+int main(){<br>
+ char data[100];<br>
+ int i, count = 0;<br>
+ char parity;<br>
+ // Taking the bits<br>
+ printf("Enter the bits (0s and 1s only): ");<br>
+ scanf("%s", data);<br>
+ printf("Enter Parity type (O for Odd, E for Even): ");<br>
+ scanf(" %c", &parity);<br>
+ // Calculate parity<br>
+ for(i = 0; data[i] != '\0'; i++){<br>
+ if(data[i] == '1')<br>
+ count++;<br>
+
+}<br>
+ int len = strlen(data);<br>
+ if(parity == 'O' || parity == 'o') {<br>
+ if(count % 2 == 0)<br>
+ data[len] = '1';<br>
+ else<br>
+ data[len] = '0';<br>
+ data[len + 1] = '\0';<br>
+ printf("The data with parity bit is: %s\n", data);<br>
+
+}<br>
+ else if(parity == 'E' || parity == 'e') {<br>
+ if(count % 2 == 0)<br>
+ data[len] = '0';<br>
+ else<br>
+ data[len] = '1';<br>
+ data[len + 1] = '\0';<br>
+ printf("The data with parity bit is: %s\n", data);<br>
+
+}<br>
+ else {<br>
+ printf("Invalid parity type entered.\n");<br>
+
+}<br>
+return 0; <br>
+}<br>
+</p></section>
+        <section class="content-container"><h2>parity checker</h2><p>
+#include stdio.h<br>
+int main(){<br>
+ char data[100];<br>
+ int i;<br>
+ int xor = 0;<br>
+ printf("Enter the received data (including parity bit): ");<br>
+ scanf("%s", data);<br>
+ for(i = 0; data[i] != '\0'; i++) {<br>
+ xor = xor ^ (data[i] - '0');<br>
+ }<br>
+ if(xor == 0)<br>
+ printf("No Error Detected.\n");<br>
+ else<br>
+ printf("Error Detected.\n");<br>
+ return 0;<br>
+}<br></p></section>
+
+<section class="content-container"><h2>Dijkstra's Algorithm</h2><p>
+int main() {<br>
+int V = 7;<br>
+int graph[7][7] = {<br>
+{0, 2, 6, 0, 0, 0, 0},<br>
+{2, 0, 0, 5, 0, 0, 0},<br>
+{6, 0, 0, 8, 0, 0, 0},<br>
+{0, 5, 8, 0,10,15, 0},<br>
+{0, 0, 0,10, 0, 0, 2},<br>
+{0, 0, 0,15, 0, 0, 6},<br>
+{0, 0, 0, 0, 2, 6, 0}<br>
+};<br>
+int dist[V],<br>
+visited[V] = {0};<br>
+// initialize distances<br>
+for (int i = 0; i < V; i++)<br>
+dist[i] = INT_MAX;<br>
+// starting from vertex 0<br>
+dist[0] = 0;<br>
+for (int i = 0; i < V; i++) {<br>
+int u = -1;<br>
+for (int j = 0; j < V; j++)<br>
+if (!visited[j] && (u == -1 || dist[j] < dist[u]))<br>
+u = j; }<br>
+//Mark vertex as visited<br>
+visited[u] = 1;<br>
+//Update distance of neighbouring vertices<br>
+for (int v = 0; v < V; v++)<br>
+if (graph[u][v] != 0 &&
+dist[u] != INT_MAX &&
+dist[
+u] = dist[
+u] + graph[u][v]
+)<br>
+{<br>
+ dist[v] = dist[v] + graph[u][v];<br>
+
+}}}<br>
+//Display shortest distance<br>
+printf("Vertex\tDistance from source 0\n");<br>
+for (i = 0; i < V; i++)<br>
+ printf("%d\t %d\n", i, dist[i]);<br>
+return 0;<br>
+}<br>
+</p></section>
+
+<section class="content-container"><h2>ip fragmentation</h2><p>
+#include stdio.h<br>
+#define HEADER 20<br>
+int main()<br>
+{<br>
+ int data, mtu, id;<br>
+ int size, i;<br>
+ int fragment = 1;<br>
+ int total = 0;<br>
+ printf("Enter IP data size:");<br>
+ scanf("%d", &data);<br>
+ printf("Enter MTU Size:");<br>
+ scanf("%d", &mtu);<br>
+ printf("Enter Identification ID:");<br>
+ scanf("%d", &id);<br>
+ size = mtu - HEADER;<br>
+ printf("\n Data per fragment = %d bytes \n", size);<br>
+ printf("\n ----- IP Fragmentation ----- \n");<br>
+ printf("|Fragment|Identification|Data Bytes|MF|\n");<br>
+ printf("+--------+--------------+----------+---+\n");<br>
+ for (i = 0; i < data; i = i + size)<br>
+ {<br>
+ int current, mf;<br>
+ if (i + size <= data)<br>
+ current = size;<br>
+ else<br>
+ current = data - i;<br>
+ if (i + size < data)<br>
+ mf = 1;<br>
+ else<br>
+ mf = 0;<br>
+ printf("|%-8d|%-14d|%-10d|%-8d|\n",<br>
+ fragment, id, current, mf);<br>
+ printf("+--------+--------------+----------+---+\n");<br>
+ total = total + current;<br>
+ fragment++;<br>
+ }<br>
+ printf("\n Original IP Data: %d bytes", data);<br>
+ printf("\n Reassembled IP Data: %d bytes", total);<br>
+ if (data == total)<br>
+ printf("\n\n Reassembly Successful");<br>
+ else<br>
+ printf("\n\n Reassembly Failed");<br>
+ return 0;<br>
+}<br></p></section>
+    </main>
+</body>
+</html>
